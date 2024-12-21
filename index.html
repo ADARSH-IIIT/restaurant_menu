@@ -2,21 +2,32 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
 
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .parent {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            background-color: white;
+            flex-direction: column;
+        }
 
-.parent{
-
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
-
-}
-
+        .header{
+            flex: 0.1;
+            background-color: pink;
+            width: 100% ;
+        }
 
         body {
             display: flex;
@@ -27,17 +38,17 @@
             background: #f0f0f0;
             font-family: Arial, sans-serif;
             overflow: hidden;
+            
         }
 
         .book {
             position: relative;
             width: 90vw;
-            flex: .8 ;
+            flex: .8;
             max-width: 400px;
-            /* height: 80vh; */
             max-height: 800px;
             perspective: 1500px;
-            margin: 20px auto;
+            /* margin: 20px auto; */
         }
 
         .page {
@@ -49,7 +60,7 @@
             transform-style: preserve-3d;
             cursor: pointer;
             background: white;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             touch-action: pan-y pinch-zoom;
         }
 
@@ -60,16 +71,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            gap: 5px;
             font-size: clamp(16px, 5vw, 24px);
             color: #333;
             backface-visibility: hidden;
-            /* padding: 20px; */
             box-sizing: border-box;
             text-align: center;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
-            background-color: rgb(170, 84, 84);
+            background-color: rgb(138, 52, 46);
         }
 
         .page-back {
@@ -81,42 +93,64 @@
             transform: rotateY(-180deg);
         }
 
-        #page1 { background: #ffecec; z-index: 4; }
-        #page2 { background: #ecffec; z-index: 3; }
-        #page3 { background: #ececff; z-index: 2; }
-        #page4 { background: #fff6ec; z-index: 1; }
 
-        .navigation {
-            /* position: fixed; */
-            bottom: 20px;
+
+        .front_page_img{
+            /* flex: 0.8; */
+            border-radius: 10px;
+
+        }
+
+        .main_img_parent{
+            flex: 0.8;
             display: flex;
-            gap: 10px;
-            z-index: 5;
-            flex: 0.1;
+            justify-content: center;
+            align-items: center;
         }
 
-        button {
-            padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
-            font-size: clamp(14px, 4vw, 16px);
-            cursor: pointer;
-            background: #333;
+        .chef_special{
+           flex: 0.2;
+           display: flex;
+            justify-content: center;
+            align-items: flex-end;
+           
+            font-family: 'exo 2' , 'roboto';
             color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-            touch-action: manipulation;
+            font-weight: 800;
+            font-size: 30px;
+            text-decoration: underline;
         }
 
-        button:hover {
-            background: #555;
+        .swipe-div{
+            flex: 0.1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+      animation: blink-animation 1s infinite;
+      color: white;
+      font-family: 'exo 2';
+
         }
 
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
+        @keyframes blink-animation {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
 
-        /* Mobile specific styles */
+
+
+        #page1 { background: #ffecec; z-index: 7; }
+        #page2 { background: #ecffec; z-index: 6; }
+        #page3 { background: #ececff; z-index: 5; }
+        #page4 { background: #fff6ec; z-index: 4; }
+        #page5 { background: #ffecff; z-index: 3; }
+        #page6 { background: #ecfff6; z-index: 2; }
+        #page7 { background: #fff6ff; z-index: 1; }
+
         @media (max-width: 768px) {
             .book {
                 width: 95vw;
@@ -127,17 +161,8 @@
             .page-content {
                 padding: 10px;
             }
-
-            .navigation {
-                bottom: 10px;
-            }
-
-            button {
-                min-width: 80px;
-            }
         }
 
-        /* Prevent rubber-banding/bouncing on iOS */
         html, body {
             position: fixed;
             width: 100%;
@@ -147,66 +172,99 @@
     </style>
 </head>
 <body>
-
     <div class="parent">
-    <div class="book">
-        <div class="page" id="page1">
-            <div class="page-content">Front page</div>
-            <div class="page-content page-back">Back of Page 1</div>
-        </div>
-        <div class="page" id="page2">
-            <div class="page-content"><img src="p2.jpeg" alt="" height="100%" width="100%"></div>
-            <!-- <div class="page-content page-back">Back of Page 2</div> -->
-        </div>
-        <div class="page" id="page3">
-            <div class="page-content"><img src="p3.jpeg" alt="" height="100%" width="100%"></div>
-            <!-- <div class="page-content page-back">Back of Page 3</div> -->
-        </div>
-        <div class="page" id="page4">
-            <div class="page-content"><img src="p4.jpeg" alt="" height="100%" width="100%"></div>
-            <!-- <div class="page-content page-back">Back of Page 4</div> -->
+        <div class="header">  <img src="header.jpg" alt="" height="100%" width="100%"> </div>
+        <div class="book">
+            <div class="page" id="page1">
+                <div class="page-content">
+                    <div class="chef_special">Chef's Special</div>
+                       <div class="main_img_parent"> <img src="main_front.jpeg" alt="" height="80%" width="100%" class="front_page_img" >  </div>
+                        <div class="swipe-div">
+                            <span class="swipe-text">Swipe Left <--- </span>
+                          </div>
+                    
+                </div>
+                <div class="page-content page-back">Back of Page 1</div>
+            </div>
+            <div class="page" id="page2">
+                <div class="page-content"><img src="p2.jpeg" alt="" height="100%" width="100%"></div>
+            </div>
+            <div class="page" id="page3">
+                <div class="page-content"><img src="p3.jpeg" alt="" height="100%" width="100%"></div>
+            </div>
+            <div class="page" id="page4">
+                <div class="page-content"><img src="p4.jpeg" alt="" height="100%" width="100%"></div>
+            </div>
+            <div class="page" id="page5">
+                <div class="page-content"><img src="p5.jpeg" alt="" height="100%" width="100%"></div>
+            </div>
+            <div class="page" id="page6">
+                <div class="page-content"><img src="p6.jpeg" alt="" height="100%" width="100%"></div>
+            </div>
+          
         </div>
     </div>
-    <!-- <div class="navigation">
-        <button id="prevBtn" disabled>Previous</button>
-        <button id="nextBtn">Next</button>
-    </div> -->
-
-</div>
 
     <script>
+        const totalPages = 5;  // All pages except the last one
+        let isForward = true;
         let currentPage = 1;
-        const totalPages = 4;
         let touchStartX = 0;
         let touchEndX = 0;
-
-        function updateButtons() {
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages;
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages) {
-                document.getElementById(`page${currentPage}`).classList.add('turned');
-                currentPage++;
-                updateButtons();
+        let isInitialAnimationComplete = false;
+        
+        function turnPage(pageNum, turned) {
+            const page = document.getElementById(`page${pageNum}`);
+            if (turned) {
+                page.classList.add('turned');
+            } else {
+                page.classList.remove('turned');
             }
         }
 
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                document.getElementById(`page${currentPage}`).classList.remove('turned');
-                updateButtons();
+        function initialAnimation() {
+            if (isForward) {
+                if (currentPage <= totalPages) {
+                    turnPage(currentPage, true);
+                    currentPage++;
+                    setTimeout(initialAnimation, 400);
+                } else {
+                    isForward = false;
+                    currentPage = totalPages;
+                    setTimeout(initialAnimation, 400);
+                }
+            } else {
+                if (currentPage >= 1) {
+                    turnPage(currentPage, false);
+                    currentPage--;
+                    if (currentPage >= 1) {
+                        setTimeout(initialAnimation, 100);
+                    } else {
+                        // Initial animation complete, enable swipe functionality
+                        isInitialAnimationComplete = true;
+                        currentPage = 1;
+                        enableSwipeControls();
+                    }
+                }
             }
         }
 
-        // Touch events for swipe
+        function enableSwipeControls() {
+            // Add touch events to pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.addEventListener('touchstart', handleTouchStart, { passive: true });
+                page.addEventListener('touchend', handleTouchEnd, { passive: true });
+            });
+        }
+
+        // Touch event handlers for swipe
         function handleTouchStart(e) {
+            if (!isInitialAnimationComplete) return;
             touchStartX = e.touches[0].clientX;
         }
 
         function handleTouchEnd(e) {
+            if (!isInitialAnimationComplete) return;
             touchEndX = e.changedTouches[0].clientX;
             handleSwipe();
         }
@@ -216,23 +274,22 @@
             const threshold = window.innerWidth * 0.15; // 15% of screen width
 
             if (Math.abs(swipeDistance) > threshold) {
-                if (swipeDistance > 0) {
-                    nextPage();
-                } else {
-                    previousPage();
+                if (swipeDistance > 0 && currentPage <= totalPages) {
+                    // Swipe left - turn page forward
+                    turnPage(currentPage, true);
+                    currentPage++;
+                } else if (swipeDistance < 0 && currentPage > 1) {
+                    // Swipe right - turn page backward
+                    turnPage(currentPage - 1, false);
+                    currentPage--;
                 }
             }
-        }
+        } 
 
-        // Add touch events to pages
-        document.querySelectorAll('.page').forEach(page => {
-            page.addEventListener('touchstart', handleTouchStart, { passive: true });
-            page.addEventListener('touchend', handleTouchEnd, { passive: true });
+        // Start initial animation when page loads
+        window.addEventListener('load', () => {
+            setTimeout(initialAnimation, 200);
         });
-
-        // Add click/touch events for buttons
-        document.getElementById('prevBtn').addEventListener('click', previousPage);
-        document.getElementById('nextBtn').addEventListener('click', nextPage);
 
         // Prevent default touch behavior on iOS
         document.addEventListener('touchmove', function(e) {
